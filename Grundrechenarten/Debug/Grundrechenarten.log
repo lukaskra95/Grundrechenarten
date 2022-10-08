@@ -1,0 +1,3 @@
+﻿  Berechnungen.cpp
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\berechnungen.cpp(76): warning C4244: "=": Konvertierung von "double" in "int", möglicher Datenverlust
+  Grundrechenarten.vcxproj -> C:\Users\lukas\source\repos\Grundrechenarten\Debug\Grundrechenarten.exe
