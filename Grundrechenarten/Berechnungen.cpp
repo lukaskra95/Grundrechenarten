@@ -10,7 +10,7 @@ enum Status {
 	NEGATIV
 };
 
-Status l_eStatus;
+Status l_eStatus; // Zum Testen
 
 int CBerechnungen::GetRundungsstelle() const
 {
