@@ -55,8 +55,8 @@ END_MESSAGE_MAP()
 
 CGrundrechenartenDlg::CGrundrechenartenDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_GRUNDRECHENARTEN_DIALOG, pParent)
-	, m_szEingabewertLinks(_T("0"))
-	, m_szEingabewertRechts(_T("0"))
+	, m_szEingabewertOben(_T("0"))
+	, m_szEingabewertUnten(_T("0"))
 	, m_szErgebnis(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -65,8 +65,8 @@ CGrundrechenartenDlg::CGrundrechenartenDlg(CWnd* pParent /*=nullptr*/)
 void CGrundrechenartenDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_EDIT_EINGABELINKS, m_szEingabewertLinks);
-	DDX_Text(pDX, IDC_EDIT_EINGABERECHTS, m_szEingabewertRechts);
+	DDX_Text(pDX, IDC_EDIT_EINGABE_OBEN, m_szEingabewertOben);
+	DDX_Text(pDX, IDC_EDIT_EINGABE_UNTEN, m_szEingabewertUnten);
 	DDX_Text(pDX, IDC_EDIT_ERGEBNIS, m_szErgebnis);
 }
 
@@ -78,12 +78,12 @@ BEGIN_MESSAGE_MAP(CGrundrechenartenDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_SUBTRAHIEREN, &CGrundrechenartenDlg::OnClickedButtonSubtrahieren)
 	ON_BN_CLICKED(IDC_BUTTON_MULTIPLIZIEREN, &CGrundrechenartenDlg::OnBnClickedButtonMultiplizieren)
 	ON_BN_CLICKED(IDC_BUTTON_DIVIDIEREN, &CGrundrechenartenDlg::OnBnClickedButtonDividieren)
-	ON_EN_CHANGE(IDC_EDIT_EINGABELINKS, &CGrundrechenartenDlg::OnChangeEditEingabelinks)
-	ON_EN_CHANGE(IDC_EDIT_EINGABERECHTS, &CGrundrechenartenDlg::OnChangeEditEingabeRechts)
-	ON_BN_CLICKED(IDC_BUTTON_DATEIEINLESENLINKS, &CGrundrechenartenDlg::OnClickedButtonDateieinlesenLinks)
-	ON_BN_CLICKED(IDC_BUTTON_DATEIEINLESENRECHTS, &CGrundrechenartenDlg::OnClickedButtonDateieinlesenRechts)
-	ON_BN_CLICKED(IDC_BUTTON_SCHREIBENLINKS, &CGrundrechenartenDlg::OnClickedButtonSchreibenlinks)
-	ON_BN_CLICKED(IDC_BUTTON_SCHREIBENRECHTS, &CGrundrechenartenDlg::OnClickedButtonSchreibenrechts)
+	ON_EN_CHANGE(IDC_EDIT_EINGABE_OBEN, &CGrundrechenartenDlg::OnChangeEditEingabeOben)
+	ON_EN_CHANGE(IDC_EDIT_EINGABE_UNTEN, &CGrundrechenartenDlg::OnChangeEditEingabeUnten)
+	ON_BN_CLICKED(IDC_BUTTON_DATEIEINLESEN_OBEN, &CGrundrechenartenDlg::OnClickedButtonDateieinlesenOben)
+	ON_BN_CLICKED(IDC_BUTTON_DATEIEINLESEN_UNTEN, &CGrundrechenartenDlg::OnClickedButtonDateieinlesenUnten)
+	ON_BN_CLICKED(IDC_BUTTON_SCHREIBEN_OBEN, &CGrundrechenartenDlg::OnClickedButtonSchreibenOben)
+	ON_BN_CLICKED(IDC_BUTTON_SCHREIBEN_UNTEN, &CGrundrechenartenDlg::OnClickedButtonSchreibenUnten)
 END_MESSAGE_MAP()
 
 
@@ -120,10 +120,10 @@ BOOL CGrundrechenartenDlg::OnInitDialog()
 
 	// TODO: Hier zusätzliche Initialisierung einfügen
 
-	m_pWndText = GetDlgItem(IDC_STATIC_WARNUNGLINKS);
+	m_pWndText = GetDlgItem(IDC_STATIC_WARNUNG_OBEN);
 	m_pWndText->ShowWindow(SW_HIDE);
 
-	m_pWndText = GetDlgItem(IDC_STATIC_WARNUNGRECHTS);
+	m_pWndText = GetDlgItem(IDC_STATIC_WARNUNG_UNTEN);
 	m_pWndText->ShowWindow(SW_HIDE);
 
 	return TRUE;  // TRUE zurückgeben, wenn der Fokus nicht auf ein Steuerelement gesetzt wird
@@ -184,12 +184,12 @@ void CGrundrechenartenDlg::OnClickedButtonAddieren()
 {
 	UpdateData(TRUE);
 
-	m_szEingabewertLinks = l_cBerechnungen.GetStringWert(m_szEingabewertLinks);
-	m_szEingabewertRechts = l_cBerechnungen.GetStringWert(m_szEingabewertRechts);
+	m_szEingabewertOben = l_cBerechnungen.GetStringWert(m_szEingabewertOben);
+	m_szEingabewertUnten = l_cBerechnungen.GetStringWert(m_szEingabewertUnten);
 
-	double l_dEingabewert1 = l_cBerechnungen.GetDoubleWert(m_szEingabewertLinks);
-	double l_dEingabewert2 = l_cBerechnungen.GetDoubleWert(m_szEingabewertRechts);
-	double l_dErgebnis = l_cBerechnungen.AdditionDurchfuehren(&l_dEingabewert1, &l_dEingabewert2);
+	double l_dEingabewertOben = l_cBerechnungen.GetDoubleWert(m_szEingabewertOben);
+	double l_dEingabewertUnten = l_cBerechnungen.GetDoubleWert(m_szEingabewertUnten);
+	double l_dErgebnis = l_cBerechnungen.AdditionDurchfuehren(&l_dEingabewertOben, &l_dEingabewertUnten);
 
 	m_szErgebnis = l_cBerechnungen.GetErgebnis(l_dErgebnis, m_szErgebnis);
 
@@ -201,12 +201,12 @@ void CGrundrechenartenDlg::OnClickedButtonSubtrahieren()
 {
 	UpdateData(TRUE);
 
-	m_szEingabewertLinks = l_cBerechnungen.GetStringWert(m_szEingabewertLinks);
-	m_szEingabewertRechts = l_cBerechnungen.GetStringWert(m_szEingabewertRechts);
+	m_szEingabewertOben = l_cBerechnungen.GetStringWert(m_szEingabewertOben);
+	m_szEingabewertUnten = l_cBerechnungen.GetStringWert(m_szEingabewertUnten);
 
-	double l_dEingabewert1 = l_cBerechnungen.GetDoubleWert(m_szEingabewertLinks);
-	double l_dEingabewert2 = l_cBerechnungen.GetDoubleWert(m_szEingabewertRechts);
-	double l_dErgebnis = l_cBerechnungen.SubtraktionDurchfuehren(l_dEingabewert1, l_dEingabewert2);
+	double l_dEingabewertOben = l_cBerechnungen.GetDoubleWert(m_szEingabewertOben);
+	double l_dEingabewertUnten = l_cBerechnungen.GetDoubleWert(m_szEingabewertUnten);
+	double l_dErgebnis = l_cBerechnungen.SubtraktionDurchfuehren(l_dEingabewertOben, l_dEingabewertUnten);
 
 	m_szErgebnis = l_cBerechnungen.GetErgebnis(l_dErgebnis, m_szErgebnis);
 
@@ -218,12 +218,12 @@ void CGrundrechenartenDlg::OnBnClickedButtonMultiplizieren()
 {
 	UpdateData(TRUE);
 
-	m_szEingabewertLinks = l_cBerechnungen.GetStringWert(m_szEingabewertLinks);
-	m_szEingabewertRechts = l_cBerechnungen.GetStringWert(m_szEingabewertRechts);
+	m_szEingabewertOben = l_cBerechnungen.GetStringWert(m_szEingabewertOben);
+	m_szEingabewertUnten = l_cBerechnungen.GetStringWert(m_szEingabewertUnten);
 
-	double l_dEingabewert1 = l_cBerechnungen.GetDoubleWert(m_szEingabewertLinks);
-	double l_dEingabewert2 = l_cBerechnungen.GetDoubleWert(m_szEingabewertRechts);
-	double l_dErgebnis = l_cBerechnungen.MultiplikationDurchfuehren(l_dEingabewert1, l_dEingabewert2);
+	double l_dEingabewertOben = l_cBerechnungen.GetDoubleWert(m_szEingabewertOben);
+	double l_dEingabewertUnten = l_cBerechnungen.GetDoubleWert(m_szEingabewertUnten);
+	double l_dErgebnis = l_cBerechnungen.MultiplikationDurchfuehren(l_dEingabewertOben, l_dEingabewertUnten);
 
 	m_szErgebnis = l_cBerechnungen.GetErgebnis(l_dErgebnis, m_szErgebnis);
 
@@ -235,12 +235,12 @@ void CGrundrechenartenDlg::OnBnClickedButtonDividieren()
 {
 	UpdateData(TRUE);
 
-	m_szEingabewertLinks = l_cBerechnungen.GetStringWert(m_szEingabewertLinks);
-	m_szEingabewertRechts = l_cBerechnungen.GetStringWert(m_szEingabewertRechts);
+	m_szEingabewertOben = l_cBerechnungen.GetStringWert(m_szEingabewertOben);
+	m_szEingabewertUnten = l_cBerechnungen.GetStringWert(m_szEingabewertUnten);
 
-	double l_dEingabewert1 = l_cBerechnungen.GetDoubleWert(m_szEingabewertLinks);
-	double l_dEingabewert2 = l_cBerechnungen.GetDoubleWert(m_szEingabewertRechts);
-	double l_dErgebnis = l_cBerechnungen.DivisionDurchfuehren(l_dEingabewert1, l_dEingabewert2);
+	double l_dEingabewertOben = l_cBerechnungen.GetDoubleWert(m_szEingabewertOben);
+	double l_dEingabewertUnten = l_cBerechnungen.GetDoubleWert(m_szEingabewertUnten);
+	double l_dErgebnis = l_cBerechnungen.DivisionDurchfuehren(l_dEingabewertOben, l_dEingabewertUnten);
 
 	m_szErgebnis = l_cBerechnungen.GetErgebnis(l_dErgebnis, m_szErgebnis);
 
@@ -248,18 +248,18 @@ void CGrundrechenartenDlg::OnBnClickedButtonDividieren()
 }
 
 
-void CGrundrechenartenDlg::OnChangeEditEingabelinks()
+void CGrundrechenartenDlg::OnChangeEditEingabeOben()
 {
-	GetDlgItemText(IDC_EDIT_EINGABELINKS,m_szEingabewertLinks);
-	m_pWndText = GetDlgItem(IDC_STATIC_WARNUNGLINKS);
+	GetDlgItemText(IDC_EDIT_EINGABE_OBEN,m_szEingabewertOben);
+	m_pWndText = GetDlgItem(IDC_STATIC_WARNUNG_OBEN);
 	m_pWndButtonAddition = GetDlgItem(IDC_BUTTON_ADDIEREN);
 	m_pWndButtonSubtraktion = GetDlgItem(IDC_BUTTON_SUBTRAHIEREN);
 	m_pWndButtonMultiplikation = GetDlgItem(IDC_BUTTON_MULTIPLIZIEREN);
 	m_pWndButtonDivision = GetDlgItem(IDC_BUTTON_DIVIDIEREN);
-	m_pWndButtonSchreiben = GetDlgItem(IDC_BUTTON_SCHREIBENLINKS);
-	m_bValidInputLeft = l_cBerechnungen.CheckForValidInput(m_szEingabewertLinks);
+	m_pWndButtonSchreiben = GetDlgItem(IDC_BUTTON_SCHREIBEN_OBEN);
+	m_bValidInputOben = l_cBerechnungen.CheckForValidInput(m_szEingabewertOben);
 
-	if (m_bValidInputLeft)
+	if (m_bValidInputOben)
 	{
 		l_cBerechnungen.ShowWarning(m_pWndText, SW_HIDE);
 		l_cBerechnungen.EnableSchreibenButton(m_pWndButtonSchreiben, true);
@@ -271,7 +271,7 @@ void CGrundrechenartenDlg::OnChangeEditEingabelinks()
 	}
 		
 
-	if(m_bValidInputLeft && m_bValidInputRight)
+	if(m_bValidInputOben && m_bValidInputUnten)
 	{
 		l_cBerechnungen.EnableBerechnungButtons(m_pWndButtonAddition, m_pWndButtonSubtraktion, m_pWndButtonMultiplikation, m_pWndButtonDivision, true);
 	}
@@ -282,18 +282,18 @@ void CGrundrechenartenDlg::OnChangeEditEingabelinks()
 }
 
 
-void CGrundrechenartenDlg::OnChangeEditEingabeRechts()
+void CGrundrechenartenDlg::OnChangeEditEingabeUnten()
 {
-	GetDlgItemText(IDC_EDIT_EINGABERECHTS,m_szEingabewertRechts);
-	m_pWndText = GetDlgItem(IDC_STATIC_WARNUNGRECHTS);
+	GetDlgItemText(IDC_EDIT_EINGABE_UNTEN,m_szEingabewertUnten);
+	m_pWndText = GetDlgItem(IDC_STATIC_WARNUNG_UNTEN);
 	m_pWndButtonAddition = GetDlgItem(IDC_BUTTON_ADDIEREN);
 	m_pWndButtonSubtraktion = GetDlgItem(IDC_BUTTON_SUBTRAHIEREN);
 	m_pWndButtonMultiplikation = GetDlgItem(IDC_BUTTON_MULTIPLIZIEREN);
 	m_pWndButtonDivision = GetDlgItem(IDC_BUTTON_DIVIDIEREN);
-	m_pWndButtonSchreiben = GetDlgItem(IDC_BUTTON_SCHREIBENRECHTS);
-	m_bValidInputRight = l_cBerechnungen.CheckForValidInput(m_szEingabewertRechts);
+	m_pWndButtonSchreiben = GetDlgItem(IDC_BUTTON_SCHREIBEN_UNTEN);
+	m_bValidInputUnten = l_cBerechnungen.CheckForValidInput(m_szEingabewertUnten);
 
-	if (m_bValidInputRight)
+	if (m_bValidInputUnten)
 	{
 		l_cBerechnungen.ShowWarning(m_pWndText, SW_HIDE);
 		l_cBerechnungen.EnableSchreibenButton(m_pWndButtonSchreiben, true);
@@ -305,7 +305,7 @@ void CGrundrechenartenDlg::OnChangeEditEingabeRechts()
 	}
 		
 
-	if (m_bValidInputLeft && m_bValidInputRight)
+	if (m_bValidInputOben && m_bValidInputUnten)
 	{
 		l_cBerechnungen.EnableBerechnungButtons(m_pWndButtonAddition, m_pWndButtonSubtraktion, m_pWndButtonMultiplikation, m_pWndButtonDivision, true);
 	}
@@ -316,7 +316,7 @@ void CGrundrechenartenDlg::OnChangeEditEingabeRechts()
 }
 
 CFileOperationen l_cFileOperationen;
-void CGrundrechenartenDlg::OnClickedButtonDateieinlesenLinks()
+void CGrundrechenartenDlg::OnClickedButtonDateieinlesenOben()
 {
 	UpdateData(TRUE);
 	
@@ -328,7 +328,7 @@ void CGrundrechenartenDlg::OnClickedButtonDateieinlesenLinks()
 	//m_szEingabewertLinks = l_cFileOperationen.l_szReadFileValue;
 	CString l_szReadFile = l_cFileOperationen.ReadFileValue(l_szPath);
 	l_cFileOperationen.SetReadFileValue(l_szReadFile);
-	m_szEingabewertLinks = l_cFileOperationen.GetReadFileValue();
+	m_szEingabewertOben = l_cFileOperationen.GetReadFileValue();
 
 	//SetDlgItemText(IDC_EDIT_EINGABELINKS,m_szEingabewertLinks);
 
@@ -339,7 +339,7 @@ void CGrundrechenartenDlg::OnClickedButtonDateieinlesenLinks()
 }
 
 
-void CGrundrechenartenDlg::OnClickedButtonDateieinlesenRechts()
+void CGrundrechenartenDlg::OnClickedButtonDateieinlesenUnten()
 {
 	UpdateData(TRUE);
 
@@ -351,7 +351,7 @@ void CGrundrechenartenDlg::OnClickedButtonDateieinlesenRechts()
 	//m_szEingabewertRechts = l_cFileOperationen.l_szReadFileValue;
 	CString l_szReadFile = l_cFileOperationen.ReadFileValue(l_szPath);
 	l_cFileOperationen.SetReadFileValue(l_szReadFile);
-	m_szEingabewertRechts = l_cFileOperationen.GetReadFileValue();
+	m_szEingabewertUnten = l_cFileOperationen.GetReadFileValue();
 
 	//SetDlgItemText(IDC_EDIT_EINGABERECHTS, m_szEingabewertRechts);
 
@@ -362,29 +362,29 @@ void CGrundrechenartenDlg::OnClickedButtonDateieinlesenRechts()
 }
 
 
-void CGrundrechenartenDlg::OnClickedButtonSchreibenlinks()
+void CGrundrechenartenDlg::OnClickedButtonSchreibenOben()
 {
 	UpdateData(TRUE);
 
 	l_szDesktopPath.LoadString(IDS_STRING_DESKTOPPATH);
-	CString l_szDateiName = _T("Bsp1");
+	CString l_szDateiName = _T("Schreiben_Oberer_Wert");
 	l_szTxtDatei.LoadString(IDS_STRING_TXTDATEI);
 	CString l_szPath = l_szDesktopPath + _T("\\") + l_szDateiName + l_szTxtDatei;
-	l_cFileOperationen.WriteFileValue(l_szPath, m_szEingabewertLinks);
+	l_cFileOperationen.WriteFileValue(l_szPath, m_szEingabewertOben);
 
 	UpdateData(FALSE);
 }
 
 
-void CGrundrechenartenDlg::OnClickedButtonSchreibenrechts()
+void CGrundrechenartenDlg::OnClickedButtonSchreibenUnten()
 {
 	UpdateData(TRUE);
 
 	l_szDesktopPath.LoadString(IDS_STRING_DESKTOPPATH);
-	CString l_szDateiName = _T("Bsp2");
+	CString l_szDateiName = _T("Schreiben_Unterer_Wert");
 	l_szTxtDatei.LoadString(IDS_STRING_TXTDATEI);
 	CString l_szPath = l_szDesktopPath + _T("\\") + l_szDateiName + l_szTxtDatei;
-	l_cFileOperationen.WriteFileValue(l_szPath, m_szEingabewertRechts);
+	l_cFileOperationen.WriteFileValue(l_szPath, m_szEingabewertUnten);
 
 	UpdateData(FALSE);
 }
