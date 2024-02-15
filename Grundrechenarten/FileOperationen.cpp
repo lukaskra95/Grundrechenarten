@@ -72,7 +72,7 @@ CString CFileOperationen::CharToCString(char l_cChar)
 //	return l_szFileValue;
 //}
 
-CString CFileOperationen::ReadFileValue(CString l_szPath)
+CString CFileOperationen::ReadFileValue(CString l_szPath) // Funktioniert noch nicht
 {
 	int l_iCharSize = 4;
 	char* l_pNewChar = new char[l_iCharSize];
@@ -128,7 +128,7 @@ CString CFileOperationen::ReadFileValue(CString l_szPath)
 	return l_szReadFileValue;
 }
 
-void CFileOperationen::WriteFileValue(CString l_szPath, CString l_szWriteValue)
+void CFileOperationen::WriteFileValue(CString l_szPath, CString l_szWriteValue) // Funktioniert, aber noch nicht perfekt
 {
 	l_szMode.LoadString(IDS_STRING_WRITEMODE);
 	l_pFileObject = _wfopen(l_szPath, l_szMode);
