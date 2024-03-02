@@ -3,9 +3,13 @@
 #include <string>
 #include "pch.h"
 #include "Grundrechenarten.h"
+#include <fstream>
+#include <iostream>
 
 #define CHARVALUE_SIZE 512
 #define WCHARVALUE_SIZE 2048
+
+using namespace std;
 
 FILE* CFileOperationen::OpenFile(CString l_szPath)
 {
@@ -40,6 +44,19 @@ CString CFileOperationen::CharToCString(char l_cChar)
 	return l_szNewValue;
 }
 
+CString CFileOperationen::ReadFileValue(CString l_szPath)
+{
+	std::ifstream myFile;
+	myFile.open(l_szPath);
+	string l_szInhalt; // Annahme, Datei hat nur eine Zeile
+	getline(myFile, l_szInhalt);
+	myFile.close();
+	
+	CString l_szNeuerInhalt = l_szInhalt.c_str();
+
+	return l_szNeuerInhalt;
+}
+
 //CString CFileOperationen::ReadFileValue(CString l_szPath)
 //{
 //	char l_szBuffer[CHARVALUE_SIZE];
@@ -72,7 +89,7 @@ CString CFileOperationen::CharToCString(char l_cChar)
 //	return l_szFileValue;
 //}
 
-CString CFileOperationen::ReadFileValue(CString l_szPath) // Funktioniert noch nicht
+CString CFileOperationen::ReadFileValue2(CString l_szPath) // Funktioniert noch nicht
 {
 	int l_iCharSize = 4;
 	char* l_pNewChar = new char[l_iCharSize];
@@ -101,7 +118,7 @@ CString CFileOperationen::ReadFileValue(CString l_szPath) // Funktioniert noch n
 
 	if (true/*l_eBOM == BOM_UTF8*/)
 	{
-		fread(l_pNewChar, sizeof(l_pNewChar), 1000, l_pFileObject);
+		size_t test = fread(l_pNewChar, sizeof(l_pNewChar), 1000, l_pFileObject);
 		while (true)
 		{
 			
@@ -128,7 +145,22 @@ CString CFileOperationen::ReadFileValue(CString l_szPath) // Funktioniert noch n
 	return l_szReadFileValue;
 }
 
-void CFileOperationen::WriteFileValue(CString l_szPath, CString l_szWriteValue) // Funktioniert, aber noch nicht perfekt
+void CFileOperationen::WriteFileValue(CString l_szPath, CString l_szWriteValue)
+{
+	std::ofstream myFile;
+	myFile.open(l_szPath);
+
+	//CStringA test = l_szWriteValue;
+	//const char* writeValue = (CStringA) l_szWriteValue;
+
+	size_t l_sLength = strlen((CStringA)l_szWriteValue);
+	
+	myFile.write((CStringA)l_szWriteValue, l_sLength);
+
+	myFile.close();
+}
+
+void CFileOperationen::WriteFileValue2(CString l_szPath, CString l_szWriteValue) // Funktioniert, aber noch nicht perfekt
 {
 	l_szMode.LoadString(IDS_STRING_WRITEMODE);
 	l_pFileObject = _wfopen(l_szPath, l_szMode);

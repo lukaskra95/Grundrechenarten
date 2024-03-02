@@ -58,6 +58,7 @@ CGrundrechenartenDlg::CGrundrechenartenDlg(CWnd* pParent /*=nullptr*/)
 	, m_szEingabewertOben(_T("0"))
 	, m_szEingabewertUnten(_T("0"))
 	, m_szErgebnis(_T(""))
+	, m_szPfadEinlesenSchreiben(_T("C:\\Users\\lukas\\Desktop\\DateienGrundrechenarten\\")) // Wie wird benutzerdefinierter Pfad angezeigt?
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -68,6 +69,7 @@ void CGrundrechenartenDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_EINGABE_OBEN, m_szEingabewertOben);
 	DDX_Text(pDX, IDC_EDIT_EINGABE_UNTEN, m_szEingabewertUnten);
 	DDX_Text(pDX, IDC_EDIT_ERGEBNIS, m_szErgebnis);
+	DDX_Text(pDX, IDC_MFCEDITBROWSE_PFADEINLESENSCHREIBEN, m_szPfadEinlesenSchreiben);
 }
 
 BEGIN_MESSAGE_MAP(CGrundrechenartenDlg, CDialogEx)
@@ -320,13 +322,14 @@ void CGrundrechenartenDlg::OnClickedButtonDateieinlesenOben()
 {
 	UpdateData(TRUE);
 	
-	l_szDesktopPath.LoadString(IDS_STRING_DESKTOPPATH);
-	CString l_szDateiName = _T("Bsp2");
-	l_szTxtDatei.LoadString(IDS_STRING_TXTDATEI);
-	CString l_szPath = l_szDesktopPath + _T("\\") + l_szDateiName + l_szTxtDatei;
+	//l_szDesktopPath.LoadString(IDS_STRING_DESKTOPPATH);
+	//CString l_szDateiName = _T("Bsp2");
+	//l_szTxtDatei.LoadString(IDS_STRING_TXTDATEI);
+	//CString l_szPath = l_szDesktopPath + _T("\\") + l_szDateiName + l_szTxtDatei;
+	//CString l_szPath = m_szEinlesenOben;
 	//l_cFileOperationen.l_szReadFileValue = l_cFileOperationen.ReadFileValue(l_szPath);
 	//m_szEingabewertLinks = l_cFileOperationen.l_szReadFileValue;
-	CString l_szReadFile = l_cFileOperationen.ReadFileValue(l_szPath);
+	CString l_szReadFile = l_cFileOperationen.ReadFileValue(m_szPfadEinlesenSchreiben);
 	l_cFileOperationen.SetReadFileValue(l_szReadFile);
 	m_szEingabewertOben = l_cFileOperationen.GetReadFileValue();
 
@@ -343,13 +346,13 @@ void CGrundrechenartenDlg::OnClickedButtonDateieinlesenUnten()
 {
 	UpdateData(TRUE);
 
-	l_szDesktopPath.LoadString(IDS_STRING_DESKTOPPATH);
-	CString l_szDateiName = _T("Bsp1");
-	l_szTxtDatei.LoadString(IDS_STRING_TXTDATEI);
-	CString l_szPath = l_szDesktopPath + _T("\\") + l_szDateiName + l_szTxtDatei;
+	//l_szDesktopPath.LoadString(IDS_STRING_DESKTOPPATH);
+	//CString l_szDateiName = _T("Bsp1");
+	//l_szTxtDatei.LoadString(IDS_STRING_TXTDATEI);
+	//CString l_szPath = l_szDesktopPath + _T("\\") + l_szDateiName + l_szTxtDatei;
 	//l_cFileOperationen.l_szReadFileValue = l_cFileOperationen.ReadFileValue(l_szPath);
 	//m_szEingabewertRechts = l_cFileOperationen.l_szReadFileValue;
-	CString l_szReadFile = l_cFileOperationen.ReadFileValue(l_szPath);
+	CString l_szReadFile = l_cFileOperationen.ReadFileValue(m_szPfadEinlesenSchreiben);
 	l_cFileOperationen.SetReadFileValue(l_szReadFile);
 	m_szEingabewertUnten = l_cFileOperationen.GetReadFileValue();
 
@@ -366,11 +369,11 @@ void CGrundrechenartenDlg::OnClickedButtonSchreibenOben()
 {
 	UpdateData(TRUE);
 
-	l_szDesktopPath.LoadString(IDS_STRING_DESKTOPPATH);
-	CString l_szDateiName = _T("Schreiben_Oberer_Wert");
-	l_szTxtDatei.LoadString(IDS_STRING_TXTDATEI);
-	CString l_szPath = l_szDesktopPath + _T("\\") + l_szDateiName + l_szTxtDatei;
-	l_cFileOperationen.WriteFileValue(l_szPath, m_szEingabewertOben);
+	//l_szDesktopPath.LoadString(IDS_STRING_DESKTOPPATH);
+	//CString l_szDateiName = _T("Schreiben_Oberer_Wert");
+	//l_szTxtDatei.LoadString(IDS_STRING_TXTDATEI);
+	//CString l_szPath = l_szDesktopPath + _T("\\") + l_szDateiName + l_szTxtDatei;
+	l_cFileOperationen.WriteFileValue(m_szPfadEinlesenSchreiben, m_szEingabewertOben);
 
 	UpdateData(FALSE);
 }
