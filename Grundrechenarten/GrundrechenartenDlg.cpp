@@ -10,11 +10,11 @@
 #include "Berechnungen.h"
 #include <stdexcept>
 #include "FileOperationen.h"
+#include "Listenoperationen.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
 
 // CAboutDlg-Dialogfeld für Anwendungsbefehl "Info"
 
@@ -70,6 +70,9 @@ void CGrundrechenartenDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_EINGABE_UNTEN, m_szEingabewertUnten);
 	DDX_Text(pDX, IDC_EDIT_ERGEBNIS, m_szErgebnis);
 	DDX_Text(pDX, IDC_MFCEDITBROWSE_PFADEINLESENSCHREIBEN, m_szPfadEinlesenSchreiben);
+	//  DDX_LBString(pDX, IDC_LIST_ZAHLENWERTE, m_szListe);
+	DDX_Control(pDX, IDC_LIST_ZAHLENWERTE, m_liste);
+	//  DDX_LBString(pDX, IDC_LIST_ZAHLENWERTE, m_szListe);
 }
 
 BEGIN_MESSAGE_MAP(CGrundrechenartenDlg, CDialogEx)
@@ -86,6 +89,7 @@ BEGIN_MESSAGE_MAP(CGrundrechenartenDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_DATEIEINLESEN_UNTEN, &CGrundrechenartenDlg::OnClickedButtonDateieinlesenUnten)
 	ON_BN_CLICKED(IDC_BUTTON_SCHREIBEN_OBEN, &CGrundrechenartenDlg::OnClickedButtonSchreibenOben)
 	ON_BN_CLICKED(IDC_BUTTON_SCHREIBEN_UNTEN, &CGrundrechenartenDlg::OnClickedButtonSchreibenUnten)
+	ON_BN_CLICKED(IDC_BUTTON_SPEICHERN, &CGrundrechenartenDlg::OnBnClickedButtonSpeichern)
 END_MESSAGE_MAP()
 
 
@@ -388,6 +392,21 @@ void CGrundrechenartenDlg::OnClickedButtonSchreibenUnten()
 	l_szTxtDatei.LoadString(IDS_STRING_TXTDATEI);
 	CString l_szPath = l_szDesktopPath + _T("\\") + l_szDateiName + l_szTxtDatei;
 	l_cFileOperationen.WriteFileValue(l_szPath, m_szEingabewertUnten);
+
+	UpdateData(FALSE);
+}
+
+void CGrundrechenartenDlg::OnBnClickedButtonSpeichern()
+{
+	UpdateData(TRUE);
+
+	l_iAddString = m_liste.AddString(m_szEingabewertOben);
+	l_iAddString = m_liste.AddString(m_szEingabewertUnten);
+	l_iAddString = m_liste.AddString(m_szErgebnis);
+	
+	l_vWerte.push_back(m_szEingabewertOben);
+	l_vWerte.push_back(m_szEingabewertUnten);
+	l_vWerte.push_back(m_szErgebnis);
 
 	UpdateData(FALSE);
 }

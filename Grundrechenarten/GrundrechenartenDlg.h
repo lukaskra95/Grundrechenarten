@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <vector>
+
 
 // CGrundrechenartenDlg-Dialogfeld
 class CGrundrechenartenDlg : public CDialogEx
@@ -46,6 +48,10 @@ private:
 	CString l_szTxtDatei;
 	bool m_bValidInputUnten = true;
 	bool m_bValidInputOben = true;
+	CListBox m_liste;
+	int l_iAddString;
+	std::vector<CString> l_vWerte;
+	
 public:
 	afx_msg void OnClickedButtonDateieinlesenOben();
 	afx_msg void OnClickedButtonDateieinlesenUnten();
@@ -62,4 +68,5 @@ public:
 //	CString m_szPfadSchreibenOben;
 //	CString m_szPfadSchreibenUnten;
 	CString m_szPfadEinlesenSchreiben;
+	afx_msg void OnBnClickedButtonSpeichern();
 };
