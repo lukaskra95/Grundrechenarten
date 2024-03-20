@@ -11,6 +11,8 @@
 #include <stdexcept>
 #include "FileOperationen.h"
 #include "Listenoperationen.h"
+#include "TextOperationen.h"
+#include "DlgOperationen.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -70,9 +72,7 @@ void CGrundrechenartenDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_EINGABE_UNTEN, m_szEingabewertUnten);
 	DDX_Text(pDX, IDC_EDIT_ERGEBNIS, m_szErgebnis);
 	DDX_Text(pDX, IDC_MFCEDITBROWSE_PFADEINLESENSCHREIBEN, m_szPfadEinlesenSchreiben);
-	//  DDX_LBString(pDX, IDC_LIST_ZAHLENWERTE, m_szListe);
 	DDX_Control(pDX, IDC_LIST_ZAHLENWERTE, m_liste);
-	//  DDX_LBString(pDX, IDC_LIST_ZAHLENWERTE, m_szListe);
 }
 
 BEGIN_MESSAGE_MAP(CGrundrechenartenDlg, CDialogEx)
@@ -90,6 +90,7 @@ BEGIN_MESSAGE_MAP(CGrundrechenartenDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_SCHREIBEN_OBEN, &CGrundrechenartenDlg::OnClickedButtonSchreibenOben)
 	ON_BN_CLICKED(IDC_BUTTON_SCHREIBEN_UNTEN, &CGrundrechenartenDlg::OnClickedButtonSchreibenUnten)
 	ON_BN_CLICKED(IDC_BUTTON_SPEICHERN, &CGrundrechenartenDlg::OnBnClickedButtonSpeichern)
+	ON_BN_CLICKED(IDC_BUTTON_SORTIEREN, &CGrundrechenartenDlg::OnBnClickedButtonSortieren)
 END_MESSAGE_MAP()
 
 
@@ -184,20 +185,21 @@ HCURSOR CGrundrechenartenDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-CBerechnungen l_cBerechnungen;
+CBerechnungen l_cBerechnungen; // TODO: Warum geht nicht Header?
+CListenoperationen l_cListenOperationen;
+CDlgOperationen l_cDlgOperationen;
+CTextOperationen l_cTextOperationen;
+CFileOperationen l_cFileOperationen;
 
 void CGrundrechenartenDlg::OnClickedButtonAddieren()
 {
 	UpdateData(TRUE);
 
-	m_szEingabewertOben = l_cBerechnungen.GetStringWert(m_szEingabewertOben);
-	m_szEingabewertUnten = l_cBerechnungen.GetStringWert(m_szEingabewertUnten);
-
-	double l_dEingabewertOben = l_cBerechnungen.GetDoubleWert(m_szEingabewertOben);
-	double l_dEingabewertUnten = l_cBerechnungen.GetDoubleWert(m_szEingabewertUnten);
+	double l_dEingabewertOben = l_cTextOperationen.GetDoubleWert(m_szEingabewertOben);
+	double l_dEingabewertUnten = l_cTextOperationen.GetDoubleWert(m_szEingabewertUnten);
 	double l_dErgebnis = l_cBerechnungen.AdditionDurchfuehren(&l_dEingabewertOben, &l_dEingabewertUnten);
 
-	m_szErgebnis = l_cBerechnungen.GetErgebnis(l_dErgebnis, m_szErgebnis);
+	m_szErgebnis = l_cTextOperationen.GetStringWert(l_dErgebnis);
 
 	UpdateData(FALSE);
 }
@@ -207,14 +209,11 @@ void CGrundrechenartenDlg::OnClickedButtonSubtrahieren()
 {
 	UpdateData(TRUE);
 
-	m_szEingabewertOben = l_cBerechnungen.GetStringWert(m_szEingabewertOben);
-	m_szEingabewertUnten = l_cBerechnungen.GetStringWert(m_szEingabewertUnten);
-
-	double l_dEingabewertOben = l_cBerechnungen.GetDoubleWert(m_szEingabewertOben);
-	double l_dEingabewertUnten = l_cBerechnungen.GetDoubleWert(m_szEingabewertUnten);
+	double l_dEingabewertOben = l_cTextOperationen.GetDoubleWert(m_szEingabewertOben);
+	double l_dEingabewertUnten = l_cTextOperationen.GetDoubleWert(m_szEingabewertUnten);
 	double l_dErgebnis = l_cBerechnungen.SubtraktionDurchfuehren(l_dEingabewertOben, l_dEingabewertUnten);
 
-	m_szErgebnis = l_cBerechnungen.GetErgebnis(l_dErgebnis, m_szErgebnis);
+	m_szErgebnis = l_cTextOperationen.GetStringWert(l_dErgebnis);
 
 	UpdateData(FALSE);
 }
@@ -224,14 +223,11 @@ void CGrundrechenartenDlg::OnBnClickedButtonMultiplizieren()
 {
 	UpdateData(TRUE);
 
-	m_szEingabewertOben = l_cBerechnungen.GetStringWert(m_szEingabewertOben);
-	m_szEingabewertUnten = l_cBerechnungen.GetStringWert(m_szEingabewertUnten);
-
-	double l_dEingabewertOben = l_cBerechnungen.GetDoubleWert(m_szEingabewertOben);
-	double l_dEingabewertUnten = l_cBerechnungen.GetDoubleWert(m_szEingabewertUnten);
+	double l_dEingabewertOben = l_cTextOperationen.GetDoubleWert(m_szEingabewertOben);
+	double l_dEingabewertUnten = l_cTextOperationen.GetDoubleWert(m_szEingabewertUnten);
 	double l_dErgebnis = l_cBerechnungen.MultiplikationDurchfuehren(l_dEingabewertOben, l_dEingabewertUnten);
 
-	m_szErgebnis = l_cBerechnungen.GetErgebnis(l_dErgebnis, m_szErgebnis);
+	m_szErgebnis = l_cTextOperationen.GetStringWert(l_dErgebnis);
 
 	UpdateData(FALSE);
 }
@@ -241,14 +237,11 @@ void CGrundrechenartenDlg::OnBnClickedButtonDividieren()
 {
 	UpdateData(TRUE);
 
-	m_szEingabewertOben = l_cBerechnungen.GetStringWert(m_szEingabewertOben);
-	m_szEingabewertUnten = l_cBerechnungen.GetStringWert(m_szEingabewertUnten);
-
-	double l_dEingabewertOben = l_cBerechnungen.GetDoubleWert(m_szEingabewertOben);
-	double l_dEingabewertUnten = l_cBerechnungen.GetDoubleWert(m_szEingabewertUnten);
+	double l_dEingabewertOben = l_cTextOperationen.GetDoubleWert(m_szEingabewertOben);
+	double l_dEingabewertUnten = l_cTextOperationen.GetDoubleWert(m_szEingabewertUnten);
 	double l_dErgebnis = l_cBerechnungen.DivisionDurchfuehren(l_dEingabewertOben, l_dEingabewertUnten);
 
-	m_szErgebnis = l_cBerechnungen.GetErgebnis(l_dErgebnis, m_szErgebnis);
+	m_szErgebnis = l_cTextOperationen.GetStringWert(l_dErgebnis);
 
 	UpdateData(FALSE);
 }
@@ -257,33 +250,35 @@ void CGrundrechenartenDlg::OnBnClickedButtonDividieren()
 void CGrundrechenartenDlg::OnChangeEditEingabeOben()
 {
 	GetDlgItemText(IDC_EDIT_EINGABE_OBEN,m_szEingabewertOben);
-	m_pWndText = GetDlgItem(IDC_STATIC_WARNUNG_OBEN);
-	m_pWndButtonAddition = GetDlgItem(IDC_BUTTON_ADDIEREN);
-	m_pWndButtonSubtraktion = GetDlgItem(IDC_BUTTON_SUBTRAHIEREN);
-	m_pWndButtonMultiplikation = GetDlgItem(IDC_BUTTON_MULTIPLIZIEREN);
-	m_pWndButtonDivision = GetDlgItem(IDC_BUTTON_DIVIDIEREN);
-	m_pWndButtonSchreiben = GetDlgItem(IDC_BUTTON_SCHREIBEN_OBEN);
-	m_bValidInputOben = l_cBerechnungen.CheckForValidInput(m_szEingabewertOben);
+	//m_pWndText = GetDlgItem(IDC_STATIC_WARNUNG_OBEN);
+	//m_pWndButtonAddition = GetDlgItem(IDC_BUTTON_ADDIEREN);
+	//m_pWndButtonSubtraktion = GetDlgItem(IDC_BUTTON_SUBTRAHIEREN);
+	//m_pWndButtonMultiplikation = GetDlgItem(IDC_BUTTON_MULTIPLIZIEREN);
+	//m_pWndButtonDivision = GetDlgItem(IDC_BUTTON_DIVIDIEREN);
+	//m_pWndButtonSchreiben = GetDlgItem(IDC_BUTTON_SCHREIBEN_OBEN);
+	m_bValidInputOben = l_cTextOperationen.CheckForValidInput(m_szEingabewertOben);
 
 	if (m_bValidInputOben)
 	{
-		l_cBerechnungen.ShowWarning(m_pWndText, SW_HIDE);
-		l_cBerechnungen.EnableSchreibenButton(m_pWndButtonSchreiben, true);
+		l_cDlgOperationen.ShowWarning(GetDlgItem(IDC_STATIC_WARNUNG_OBEN), SW_HIDE);
+		l_cDlgOperationen.ChangeVisibilityButton(GetDlgItem(IDC_BUTTON_SCHREIBEN_OBEN), true);
 	}
 	else
 	{
-		l_cBerechnungen.ShowWarning(m_pWndText, SW_SHOW);
-		l_cBerechnungen.EnableSchreibenButton(m_pWndButtonSchreiben, false);
+		l_cDlgOperationen.ShowWarning(GetDlgItem(IDC_STATIC_WARNUNG_OBEN), SW_SHOW);
+		l_cDlgOperationen.ChangeVisibilityButton(GetDlgItem(IDC_BUTTON_SCHREIBEN_OBEN), false);
 	}
 		
 
 	if(m_bValidInputOben && m_bValidInputUnten)
 	{
-		l_cBerechnungen.EnableBerechnungButtons(m_pWndButtonAddition, m_pWndButtonSubtraktion, m_pWndButtonMultiplikation, m_pWndButtonDivision, true);
+		l_cDlgOperationen.ChangeVisibilityButtons(GetDlgItem(IDC_BUTTON_ADDIEREN), GetDlgItem(IDC_BUTTON_SUBTRAHIEREN), 
+			GetDlgItem(IDC_BUTTON_MULTIPLIZIEREN), GetDlgItem(IDC_BUTTON_DIVIDIEREN), true);
 	}
 	else
 	{
-		l_cBerechnungen.EnableBerechnungButtons(m_pWndButtonAddition, m_pWndButtonSubtraktion, m_pWndButtonMultiplikation, m_pWndButtonDivision, false);
+		l_cDlgOperationen.ChangeVisibilityButtons(GetDlgItem(IDC_BUTTON_ADDIEREN), GetDlgItem(IDC_BUTTON_SUBTRAHIEREN), 
+			GetDlgItem(IDC_BUTTON_MULTIPLIZIEREN), GetDlgItem(IDC_BUTTON_DIVIDIEREN), false);
 	}
 }
 
@@ -291,37 +286,38 @@ void CGrundrechenartenDlg::OnChangeEditEingabeOben()
 void CGrundrechenartenDlg::OnChangeEditEingabeUnten()
 {
 	GetDlgItemText(IDC_EDIT_EINGABE_UNTEN,m_szEingabewertUnten);
-	m_pWndText = GetDlgItem(IDC_STATIC_WARNUNG_UNTEN);
-	m_pWndButtonAddition = GetDlgItem(IDC_BUTTON_ADDIEREN);
-	m_pWndButtonSubtraktion = GetDlgItem(IDC_BUTTON_SUBTRAHIEREN);
-	m_pWndButtonMultiplikation = GetDlgItem(IDC_BUTTON_MULTIPLIZIEREN);
-	m_pWndButtonDivision = GetDlgItem(IDC_BUTTON_DIVIDIEREN);
-	m_pWndButtonSchreiben = GetDlgItem(IDC_BUTTON_SCHREIBEN_UNTEN);
-	m_bValidInputUnten = l_cBerechnungen.CheckForValidInput(m_szEingabewertUnten);
+	//m_pWndText = GetDlgItem(IDC_STATIC_WARNUNG_UNTEN);
+	//m_pWndButtonAddition = GetDlgItem(IDC_BUTTON_ADDIEREN);
+	//m_pWndButtonSubtraktion = GetDlgItem(IDC_BUTTON_SUBTRAHIEREN);
+	//m_pWndButtonMultiplikation = GetDlgItem(IDC_BUTTON_MULTIPLIZIEREN);
+	//m_pWndButtonDivision = GetDlgItem(IDC_BUTTON_DIVIDIEREN);
+	//m_pWndButtonSchreiben = GetDlgItem(IDC_BUTTON_SCHREIBEN_UNTEN);
+	m_bValidInputUnten = l_cTextOperationen.CheckForValidInput(m_szEingabewertUnten);
 
 	if (m_bValidInputUnten)
 	{
-		l_cBerechnungen.ShowWarning(m_pWndText, SW_HIDE);
-		l_cBerechnungen.EnableSchreibenButton(m_pWndButtonSchreiben, true);
+		l_cDlgOperationen.ShowWarning(GetDlgItem(IDC_STATIC_WARNUNG_UNTEN), SW_HIDE);
+		l_cDlgOperationen.ChangeVisibilityButton(GetDlgItem(IDC_BUTTON_SCHREIBEN_UNTEN), true);
 	}	
 	else
 	{
-		l_cBerechnungen.ShowWarning(m_pWndText, SW_SHOW);
-		l_cBerechnungen.EnableSchreibenButton(m_pWndButtonSchreiben, false);
+		l_cDlgOperationen.ShowWarning(GetDlgItem(IDC_STATIC_WARNUNG_UNTEN), SW_SHOW);
+		l_cDlgOperationen.ChangeVisibilityButton(GetDlgItem(IDC_BUTTON_SCHREIBEN_UNTEN), false);
 	}
 		
 
 	if (m_bValidInputOben && m_bValidInputUnten)
 	{
-		l_cBerechnungen.EnableBerechnungButtons(m_pWndButtonAddition, m_pWndButtonSubtraktion, m_pWndButtonMultiplikation, m_pWndButtonDivision, true);
+		l_cDlgOperationen.ChangeVisibilityButtons(GetDlgItem(IDC_BUTTON_ADDIEREN), GetDlgItem(IDC_BUTTON_SUBTRAHIEREN), 
+			GetDlgItem(IDC_BUTTON_MULTIPLIZIEREN), GetDlgItem(IDC_BUTTON_DIVIDIEREN), true);
 	}
 	else
 	{
-		l_cBerechnungen.EnableBerechnungButtons(m_pWndButtonAddition, m_pWndButtonSubtraktion, m_pWndButtonMultiplikation, m_pWndButtonDivision, false);
+		l_cDlgOperationen.ChangeVisibilityButtons(GetDlgItem(IDC_BUTTON_ADDIEREN), GetDlgItem(IDC_BUTTON_SUBTRAHIEREN), 
+			GetDlgItem(IDC_BUTTON_MULTIPLIZIEREN), GetDlgItem(IDC_BUTTON_DIVIDIEREN), false);
 	}
 }
 
-CFileOperationen l_cFileOperationen;
 void CGrundrechenartenDlg::OnClickedButtonDateieinlesenOben()
 {
 	UpdateData(TRUE);
@@ -407,6 +403,32 @@ void CGrundrechenartenDlg::OnBnClickedButtonSpeichern()
 	l_vWerte.push_back(m_szEingabewertOben);
 	l_vWerte.push_back(m_szEingabewertUnten);
 	l_vWerte.push_back(m_szErgebnis);
+
+	SetDlgItemText(IDC_EDIT_EINGABE_OBEN, _T("0"));
+	SetDlgItemText(IDC_EDIT_EINGABE_UNTEN, _T("0"));
+	//SetDlgItemText(IDC_EDIT_ERGEBNIS, _T("")); // TODO: Warum geht das nicht?
+	m_szErgebnis = _T(""); 
+
+	l_cDlgOperationen.SetFocus((CEdit*)GetDlgItem(IDC_EDIT_EINGABE_OBEN));
+	l_cDlgOperationen.ChangeVisibilityButton(GetDlgItem(IDC_BUTTON_SORTIEREN),TRUE);
+	
+	UpdateData(FALSE);
+}
+
+void CGrundrechenartenDlg::OnBnClickedButtonSortieren()
+{
+	UpdateData(TRUE);
+
+	l_vWerte = l_cListenOperationen.WerteSortieren(l_vWerte);
+	l_cListenOperationen.WerteErsetzen(&m_liste, l_vWerte);
+
+	SetDlgItemText(IDC_EDIT_EINGABE_OBEN, _T("0"));
+	SetDlgItemText(IDC_EDIT_EINGABE_UNTEN, _T("0"));
+	//SetDlgItemText(IDC_EDIT_ERGEBNIS, _T("")); // TODO: Warum geht das nicht?
+	m_szErgebnis = _T("");
+
+	l_cDlgOperationen.SetFocus((CEdit*)GetDlgItem(IDC_EDIT_EINGABE_OBEN));
+	l_cDlgOperationen.ChangeVisibilityButton(GetDlgItem(IDC_BUTTON_SORTIEREN), FALSE);
 
 	UpdateData(FALSE);
 }

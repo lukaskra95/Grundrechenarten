@@ -63,10 +63,7 @@ public:
 	CWnd* m_pWndButtonSchreiben;
 	afx_msg void OnClickedButtonSchreibenOben();
 	afx_msg void OnClickedButtonSchreibenUnten();
-//	CString m_szPfadEinlesenOben;
-//	CString m_szPfadEinlesenUnten;
-//	CString m_szPfadSchreibenOben;
-//	CString m_szPfadSchreibenUnten;
 	CString m_szPfadEinlesenSchreiben;
 	afx_msg void OnBnClickedButtonSpeichern();
+	afx_msg void OnBnClickedButtonSortieren();
 };

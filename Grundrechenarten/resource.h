@@ -39,8 +39,8 @@
 #define IDC_MFCEDITBROWSE_PFADEINLESENSCHREIBEN 1028
 #define IDC_LIST_ZAHLENWERTE            1031
 #define IDC_BUTTON_SPEICHERN            1035
-#define IDC_CHECK1                      1044
 #define IDC_CHECK_SORTIERT              1044
+#define IDC_BUTTON_SORTIEREN            1049
 
 // Next default values for new objects
 // 
@@ -48,7 +48,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        131
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1045
+#define _APS_NEXT_CONTROL_VALUE         1050
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

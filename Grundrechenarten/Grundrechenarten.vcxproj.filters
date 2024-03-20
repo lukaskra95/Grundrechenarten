@@ -42,6 +42,12 @@
     <ClInclude Include="Listenoperationen.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="DlgOperationen.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="TextOperationen.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Grundrechenarten.cpp">
@@ -60,6 +66,12 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Listenoperationen.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgOperationen.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="TextOperationen.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
