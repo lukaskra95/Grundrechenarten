@@ -3,9 +3,14 @@
 #include <string>
 #include "GrundrechenartenDlg.h"
 
-void CDlgOperationen::ShowWarning(CWnd * l_pWnd, int l_iShowFlag)
+//void CDlgOperationen::ShowWarning(CWnd * l_pWnd, int l_iShowFlag)
+//{
+//	l_pWnd->ShowWindow(l_iShowFlag);
+//}
+
+void CDlgOperationen::ChangeVisibilityText(CWnd * l_pText, int l_iFlag)
 {
-	l_pWnd->ShowWindow(l_iShowFlag);
+	l_pText->ShowWindow(l_iFlag);
 }
 
 void CDlgOperationen::ChangeVisibilityButtons(CWnd * l_pWndAddition, CWnd * l_pWndSubtraktion, CWnd * l_pWndMultiplikation, CWnd * l_pWndDivision, bool l_bEnableButton)

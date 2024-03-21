@@ -10,7 +10,7 @@ private:
 	CString l_szReadFileValue;
 	FILE* l_pFileObject;
 public:
-	int ReadFile(CString l_szPath, char *l_cBuffer);
+	int ReadFile(CString l_szPath, char *l_pBuffer);
 	CString CharToCString(char l_cChar); // unvollständig
 	CString ReadFileValue(CString l_szPath);
 	CString ReadFileValue2(CString l_szPath); // unvollständig

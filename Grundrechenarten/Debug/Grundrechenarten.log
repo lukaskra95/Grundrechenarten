@@ -1,2 +1,48 @@
-﻿  GrundrechenartenDlg.cpp
+﻿  Listenoperationen.cpp
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\listenoperationen.cpp(34): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\listenoperationen.cpp(36): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\listenoperationen.cpp(52): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\listenoperationen.cpp(72): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\listenoperationen.cpp(87): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\listenoperationen.cpp(89): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\listenoperationen.cpp(103): warning C4244: "Initialisierung": Konvertierung von "_Ty" in "int", möglicher Datenverlust
+          with
+          [
+              _Ty=double
+          ]
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\listenoperationen.cpp(104): warning C4244: "Initialisierung": Konvertierung von "_Ty" in "int", möglicher Datenverlust
+          with
+          [
+              _Ty=double
+          ]
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\listenoperationen.cpp(105): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\listenoperationen.cpp(107): warning C4244: "=": Konvertierung von "_Ty" in "int", möglicher Datenverlust
+          with
+          [
+              _Ty=double
+          ]
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\listenoperationen.cpp(110): warning C4244: "=": Konvertierung von "_Ty" in "int", möglicher Datenverlust
+          with
+          [
+              _Ty=double
+          ]
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\listenoperationen.cpp(118): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\listenoperationen.cpp(131): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\listenoperationen.cpp(134): warning C4244: "Argument": Konvertierung von "_Ty" in "const unsigned int", möglicher Datenverlust
+          with
+          [
+              _Ty=double
+          ]
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\listenoperationen.cpp(135): warning C4244: "Argument": Konvertierung von "_Ty" in "const unsigned int", möglicher Datenverlust
+          with
+          [
+              _Ty=double
+          ]
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\listenoperationen.cpp(145): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\listenoperationen.cpp(159): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\lukas\source\repos\grundrechenarten\grundrechenarten\listenoperationen.cpp(161): warning C4244: "Initialisierung": Konvertierung von "_Ty" in "int", möglicher Datenverlust
+          with
+          [
+              _Ty=double
+          ]
   Grundrechenarten.vcxproj -> C:\Users\lukas\source\repos\Grundrechenarten\Debug\Grundrechenarten.exe

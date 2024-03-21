@@ -24,10 +24,10 @@ int CFileOperationen::CloseFile(FILE* l_pFile)
 	return l_iCloseFile;
 }
 
-int CFileOperationen::ReadFile(CString l_szPath,char *l_cBuffer)
+int CFileOperationen::ReadFile(CString l_szPath,char *l_pBuffer)
 {
 	FILE * l_pOpenFile = OpenFile(l_szPath);
-	size_t l_iReadFile = fread(l_cBuffer, sizeof(char), 1000, l_pOpenFile);
+	size_t l_iReadFile = fread(l_pBuffer, sizeof(char), 1000, l_pOpenFile);
 	CloseFile(l_pOpenFile);
 
 	return l_iReadFile;

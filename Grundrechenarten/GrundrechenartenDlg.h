@@ -55,12 +55,12 @@ private:
 public:
 	afx_msg void OnClickedButtonDateieinlesenOben();
 	afx_msg void OnClickedButtonDateieinlesenUnten();
-	CWnd* m_pWndText;
-	CWnd* m_pWndButtonAddition;
-	CWnd* m_pWndButtonSubtraktion;
-	CWnd* m_pWndButtonMultiplikation;
-	CWnd* m_pWndButtonDivision;
-	CWnd* m_pWndButtonSchreiben;
+	//CWnd* m_pWndText;
+	//CWnd* m_pWndButtonAddition;
+	//CWnd* m_pWndButtonSubtraktion;
+	//CWnd* m_pWndButtonMultiplikation;
+	//CWnd* m_pWndButtonDivision;
+	//CWnd* m_pWndButtonSchreiben;
 	afx_msg void OnClickedButtonSchreibenOben();
 	afx_msg void OnClickedButtonSchreibenUnten();
 	CString m_szPfadEinlesenSchreiben;
