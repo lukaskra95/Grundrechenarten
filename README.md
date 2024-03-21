@@ -5,5 +5,5 @@ Im Fokus steht viel mehr, dass eine korrekte Funktionalität des Programms gewä
 Für die korrekte Berechnung von zwei Zahlen werden die Eingaben im Code entsprechend der vorliegendenen Datentypen bearbeitet. Dazu zählt bei ganzzahligen Eingaben, die vom Programm als Gleitkommazahlen interpretiert werden, das Abschneiden der Nachkommastellen sowie des Kommas. \
 Zuletzt werden im Code zusätzlich Techniken der C++-Programmierung wie Pointer verwendet. \
 Der weitere Plan für das Projekt beinhaltet das Einbeziehen von Dateien. Dabei soll noch das Einlesen von Dateien ermöglicht werden. Des Weiteren ist bereits die Funktionalität für das Schreiben von Dateien gegeben, jedoch soll es noch optimiert werden. \
-Stand: Die Eingaben werden in einer ListBox, und nicht wie ursprünglich in einer Baumstruktur geplant, gespeichert, indem sie von hinten angehängt werden. \
-Weiterer Plan: Die abgespeicherten Werte sollen mithilfe von Sortieralgorithmen sortiert werden.
+Stand: Es wurde ein Sortieralgorithmus implementiert. Außerdem wurde Code in verschiedene Methoden, nämlich inhaltsbezogen, ausgelagert. \
+Weiterer Plan: Zur Übung sollen weitere solche Algorithmen implementiert werden.
