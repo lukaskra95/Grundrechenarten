@@ -15,7 +15,8 @@ vector<CString> CListenoperationen::WerteSortieren(vector<CString> l_vListenWert
 	vector<double> l_vDoubleVector = l_cText.GetDoubleVector(l_vListenWerte);
 	//l_vDoubleVector = SelectionSort(l_vDoubleVector);
 	//l_vDoubleVector = BubbleSort(l_vDoubleVector);
-	l_vDoubleVector = InsertionSort(l_vDoubleVector);
+	//l_vDoubleVector = InsertionSort(l_vDoubleVector);
+	l_vDoubleVector = CountingSort2(l_vDoubleVector);
 	l_vListenWerte = l_cText.GetStringVector(l_vDoubleVector);
 
 	return l_vListenWerte;
@@ -100,44 +101,85 @@ vector<double> CListenoperationen::BubbleSort3(vector<double> l_vDoubleVector)
 // TODO
 vector<double> CListenoperationen::CountingSort(vector<double> l_vDoubleVector) 
 {
+	// 1. Schritt: Größe l_vCountVector mithilfe von Min und Max bestimmen
 	int l_iMin = l_vDoubleVector[0]; // Geht nur bei ganzen Zahlen
 	int l_iMax = l_vDoubleVector[0];
 	for (int i = 0; i < l_vDoubleVector.size(); i++) {
-		if (l_iMin < l_vDoubleVector[i]) {
+		if (l_iMin > l_vDoubleVector[i]) {
 			l_iMin = l_vDoubleVector[i];
 		}
-		if (l_iMax > l_vDoubleVector[i]) {
+		if (l_iMax < l_vDoubleVector[i]) {
 			l_iMax = l_vDoubleVector[i];
 		}
 	}
-	int l_iGroesseVector = l_iMax - l_iMin + 1;
-	vector<int> l_vZwischenVector;
-	l_vZwischenVector.resize(l_iGroesseVector);
 
-	for (int i = 0; i < l_iGroesseVector; i++) {
-		if (i == l_vDoubleVector[i] && l_vDoubleVector.size() <= l_iGroesseVector) {
-			l_vZwischenVector[i]++;
-		}
+	int l_iGroesseCountVector = l_iMax - l_iMin + 1;
+	vector<int> l_vCountVector;
+	l_vCountVector.resize(l_iGroesseCountVector);
+
+	//double test = 3.0;
+	//bool l_bVectorContains = find(l_vDoubleVector.begin(), l_vDoubleVector.end(), test) == l_vDoubleVector.begin();
+
+
+	// 2. Schritt: Die vorkommenden Zahlen um 1 erhöhen
+	for (int i = 0; i < l_vDoubleVector.size(); i++) {
+		l_vCountVector[l_vDoubleVector[i] - l_iMin]++;
 	}
 
-	for (int i = 0; i < l_iGroesseVector; i++) {
-		l_vZwischenVector[i + 1] = l_vZwischenVector[i + 1] + l_vZwischenVector[i];
+	// 3. Schritt: Von links nach rechts aufaddieren
+	for (int i = 1; i < l_iGroesseCountVector; i++) {
+		l_vCountVector[i] = l_vCountVector[i] + l_vCountVector[i - 1];
 	}
 
 	vector<double> l_vErgebnisVector;
 	l_vErgebnisVector.resize(l_vDoubleVector.size());
 
-	for (int i = 0; i < l_iGroesseVector; i++) {
-		if (l_vDoubleVector.size() < l_iGroesseVector)
-			break;
-		else {
-			l_vErgebnisVector[l_vZwischenVector[l_vDoubleVector[l_iGroesseVector - i - 1]]] = l_vDoubleVector[l_iGroesseVector - i - 1];
-			l_vZwischenVector[l_vDoubleVector[l_iGroesseVector - i - 1]]--;
-		}
-			
+	// 4. Schritt: Sortierte Zahlen in l_vErgebnisVector eintragen
+	//for (int i = 0; i < l_vDoubleVector.size(); i++) {
+	//	double wert_doubleVector = l_vDoubleVector[l_vDoubleVector.size() - i - 1];
+	//	double index_countVector = wert_doubleVector - l_iMin;
+	//	int wert_countVector = l_vCountVector[index_countVector];
+	//	int index_ergebnisVector = wert_countVector - 1;
+	//	l_vErgebnisVector[index_ergebnisVector] = wert_doubleVector;
+	//	l_vCountVector[index_countVector]--;
+	//}
+
+	for (int i = 0; i < l_vDoubleVector.size(); i++) {
+		l_vErgebnisVector[l_vCountVector[l_vDoubleVector[l_vDoubleVector.size() - i - 1] - l_iMin] - 1] = l_vDoubleVector[l_vDoubleVector.size() - i - 1];
+		l_vCountVector[l_vDoubleVector[l_vDoubleVector.size() - i - 1] - l_iMin]--;
 	}
 
 	return l_vErgebnisVector;
+}
+
+vector<double> CListenoperationen::CountingSort2(vector<double> l_vDoubleVector)
+{
+	int l_iMax = l_vDoubleVector[0];
+	int l_iMin = l_vDoubleVector[0];
+	for (int i = 0; i < l_vDoubleVector.size(); i++) {
+		if (l_vDoubleVector[i] > l_iMax) {
+			l_iMax = l_vDoubleVector[i];
+		}
+		if (l_vDoubleVector[i] < l_iMin) {
+			l_iMin = l_vDoubleVector[i];
+		}
+	}
+
+	vector<int> l_vCountVector;
+	l_vCountVector.resize(l_iMax - l_iMin + 1);
+
+	for (int i = 0; i < l_vDoubleVector.size(); i++) {
+		l_vCountVector[l_vDoubleVector[i] - l_iMin]++;
+	}
+
+	int einbauen = 0;
+	for (int i = 0; i <= l_iMax-l_iMin; i++) {
+		for (int j = 0; j < l_vCountVector[i]; j++) {
+			l_vDoubleVector[einbauen] = i + l_iMin;
+			einbauen++;
+		}
+	}
+	return l_vDoubleVector;
 }
 
 vector<double> CListenoperationen::InsertionSort(vector<double> l_vDoubleVector)

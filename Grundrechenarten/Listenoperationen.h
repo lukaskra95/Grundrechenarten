@@ -11,6 +11,7 @@ private:
 	vector<double> BubbleSort2(vector<double> l_vDoubleVector);
 	vector<double> BubbleSort3(vector<double> l_vDoubleVector);
 	vector<double> CountingSort(vector<double> l_vDoubleVector);
+	vector<double> CountingSort2(vector<double> l_vDoubleVector);
 	vector<double> InsertionSort(vector<double> l_vDoubleVector);
 	vector<double> InsertionSort2(vector<double> l_vDoubleVector);
 public:
